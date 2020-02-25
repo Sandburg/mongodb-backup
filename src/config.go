@@ -28,7 +28,7 @@ func initConfig() Config {
 		host        = "localhost"
 		port        = "27017"
 		dir         = "/tmp"
-		archiveName = fmt.Sprintf("backup-%s.tar.gz", time.Now().Unix())
+		archiveName = fmt.Sprintf("backup-%d.tar.gz", time.Now().Unix())
 		auth        string
 		db          string
 	)
