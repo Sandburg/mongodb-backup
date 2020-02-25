@@ -25,8 +25,8 @@ func main() {
 		c.Port,
 		c.AuthPart,
 		c.DB,
-		"--archive",
-		fmt.Sprintf("%s/%s", c.ArchiveDir, c.ArchiveName),
+		"--gzip",
+		fmt.Sprintf("--archive=%s/%s", c.ArchiveDir, c.ArchiveName),
 	)
 
 	log.Infof("Starting mongodump: %s", cmd.String())
