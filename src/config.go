@@ -46,11 +46,11 @@ func initConfig() Config {
 	}
 
 	if os.Getenv("MONGODB_USER") != "" && os.Getenv("MONGODB_PASSWORD") != "" {
-		auth = fmt.Sprintf(`--username="%s" --password="%s"`, os.Getenv("MONGODB_USER"), os.Getenv("MONGODB_PASSWORD"))
+		auth = fmt.Sprintf("--username %s --password %s", os.Getenv("MONGODB_USER"), os.Getenv("MONGODB_PASSWORD"))
 	}
 
 	if os.Getenv("MONGODB_DB") != "" {
-		db = fmt.Sprintf(`--db="%s"`, os.Getenv("MONGODB_DB"))
+		db = fmt.Sprintf("--db %s", os.Getenv("MONGODB_DB"))
 	}
 
 	return Config{
