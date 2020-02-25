@@ -17,17 +17,7 @@ func main() {
 
 	storage := storage.New(c.BucketID)
 
-	cmd := exec.Command(
-		"mongodump",
-		"--host",
-		c.Host,
-		"--port",
-		c.Port,
-		c.AuthPart,
-		c.DB,
-		"--gzip",
-		fmt.Sprintf("--archive=%s/%s", c.ArchiveDir, c.ArchiveName),
-	)
+	cmd := exec.Command("mongodump", buildArgs(c)...)
 
 	log.Infof("Starting mongodump: %s", cmd.String())
 
@@ -50,4 +40,25 @@ func main() {
 	}
 
 	storage.WriteFile(c.ArchiveName, dumpData)
+}
+
+func buildArgs(c Config) []string {
+	args := []string{
+		"--host",
+		c.Host,
+		"--port",
+		c.Port,
+		"--gzip",
+		fmt.Sprintf("--archive=%s/%s", c.ArchiveDir, c.ArchiveName),
+	}
+
+	if c.DB != "" {
+		args = append(args, c.DB)
+	}
+
+	if c.AuthPart != "" {
+		args = append(args, c.AuthPart)
+	}
+
+	return args
 }
