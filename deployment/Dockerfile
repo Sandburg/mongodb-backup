@@ -12,5 +12,3 @@ FROM mongo:latest
 COPY --from=builder /go/bin/backup /backup
 
 WORKDIR /
-
-ENTRYPOINT ["/backup"]
