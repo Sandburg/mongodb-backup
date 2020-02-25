@@ -17,7 +17,7 @@ type Config struct {
 	ArchiveName    string
 	AuthPart       string
 	DB             string
-	MaxBackupItems int64
+	MaxBackupItems int
 }
 
 func initConfig() Config {
@@ -33,7 +33,7 @@ func initConfig() Config {
 		archiveName    = fmt.Sprintf("backup-%d.gz", time.Now().Unix())
 		auth           string
 		db             string
-		maxBackupItems int64 = 10
+		maxBackupItems = 10
 	)
 
 	if os.Getenv("MONGODB_HOST") != "" {
@@ -57,7 +57,7 @@ func initConfig() Config {
 	}
 
 	if os.Getenv("MAX_BACKUP_ITEMS") != "" {
-		maxBackupItems, _ = strconv.ParseInt(os.Getenv("MONGODB_DB"), 10, 64)
+		maxBackupItems, _ = strconv.Atoi(os.Getenv("MONGODB_DB"))
 	}
 
 	return Config{

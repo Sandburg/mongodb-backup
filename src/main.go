@@ -39,18 +39,21 @@ func main() {
 		log.Panic(err)
 	}
 
+	log.Infof("Start uploading file")
+
 	storage.WriteFile(c.ArchiveName, dumpData)
+
+	log.Infof("Finished uploading file")
+
+	fn := storage.GetFilenames()
+	if len(fn) > c.MaxBackupItems {
+		log.Infof("Deleting oldest backup: %s", fn[0])
+		storage.DeleteFile(fn[0])
+	}
 }
 
 func buildArgs(c Config) []string {
-	args := []string{
-		"--host",
-		c.Host,
-		"--port",
-		c.Port,
-		"--gzip",
-		fmt.Sprintf("--archive=%s/%s", c.ArchiveDir, c.ArchiveName),
-	}
+	args := []string{"--host", c.Host, "--port", c.Port, "--gzip", fmt.Sprintf("--archive=%s/%s", c.ArchiveDir, c.ArchiveName)}
 
 	if c.DB != "" {
 		args = append(args, c.DB)

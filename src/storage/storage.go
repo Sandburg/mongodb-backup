@@ -9,6 +9,7 @@ import (
 	"cloud.google.com/go/storage"
 	firebase "firebase.google.com/go"
 	"github.com/pkg/errors"
+	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 )
 
@@ -33,6 +34,29 @@ func (fs Storage) WriteFile(fileName string, content []byte) {
 		log.Panic(errors.Wrapf(err, "unable to write data to bucket, file %q", fileName))
 	}
 	defer wc.Close()
+}
+
+func (fs Storage) GetFilenames() (names []string) {
+	it := fs.Bucket.Objects(fs.Ctx, nil)
+	for {
+		attrs, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			log.Panic(err)
+		}
+		names = append(names, attrs.Name)
+	}
+
+	return names
+}
+
+func (fs Storage) DeleteFile(fileName string) {
+	err := fs.Bucket.Object(fileName).Delete(fs.Ctx)
+	if err != nil {
+		log.Panic(errors.Wrapf(err, "error while deleting file: %s", fileName))
+	}
 }
 
 func initBucket(ctx context.Context, bucketID string) *storage.BucketHandle {
