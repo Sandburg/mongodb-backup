@@ -57,7 +57,7 @@ func initConfig() Config {
 	}
 
 	if os.Getenv("MAX_BACKUP_ITEMS") != "" {
-		maxBackupItems, _ = strconv.Atoi(os.Getenv("MONGODB_DB"))
+		maxBackupItems, _ = strconv.Atoi(os.Getenv("MAX_BACKUP_ITEMS"))
 	}
 
 	return Config{
