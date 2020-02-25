@@ -25,9 +25,10 @@ func main() {
 
 	log.Infof("Starting mongodump: %s", cmd.String())
 
-	out, err := cmd.Output()
+	_, err := cmd.Output()
 	if err != nil {
-		log.Errorf("failed dumping mongodb: %s", string(out))
+		log.Errorf("failed dumping mongodb: %s", err)
+		return
 	}
 
 	log.Info("Finished mongodump")
