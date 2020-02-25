@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os/exec"
@@ -25,13 +26,18 @@ func main() {
 
 	log.Infof("Starting mongodump: %s", cmd.String())
 
-	_, err := cmd.Output()
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
 	if err != nil {
-		log.Errorf("failed dumping mongodb: %s", err)
-		return
+		log.Panicf("failed dumping mongodb - %s: %s", fmt.Sprint(err), stderr.String())
 	}
 
-	log.Info("Finished mongodump")
+	fmt.Printf(out.String())
+
+	log.Infof("Finished mongodump")
 
 	dumpData, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", c.ArchiveDir, c.ArchiveName))
 	if err != nil {
