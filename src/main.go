@@ -23,6 +23,8 @@ func main() {
 		c.Host,
 		"--port",
 		c.Port,
+		c.AuthPart,
+		c.DB,
 		"--archive",
 		fmt.Sprintf("%s/%s", c.ArchiveDir, c.ArchiveName),
 	)

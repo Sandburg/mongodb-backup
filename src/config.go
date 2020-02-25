@@ -28,7 +28,7 @@ func initConfig() Config {
 		host        = "localhost"
 		port        = "27017"
 		dir         = "/tmp"
-		archiveName = fmt.Sprintf("backup-%s.tar.gz", time.Now().Format(time.RFC3339))
+		archiveName = fmt.Sprintf("backup-%s.tar.gz", time.Now().Unix())
 		auth        string
 		db          string
 	)
@@ -46,11 +46,11 @@ func initConfig() Config {
 	}
 
 	if os.Getenv("MONGODB_USER") != "" && os.Getenv("MONGODB_PASSWORD") != "" {
-		auth = fmt.Sprintf("--username %s --password %s", os.Getenv("MONGODB_USER"), os.Getenv("MONGODB_PASSWORD"))
+		auth = fmt.Sprintf("--username=%s --password=%s", os.Getenv("MONGODB_USER"), os.Getenv("MONGODB_PASSWORD"))
 	}
 
 	if os.Getenv("MONGODB_DB") != "" {
-		db = fmt.Sprintf("--db %s", os.Getenv("MONGODB_DB"))
+		db = fmt.Sprintf("--db=%s", os.Getenv("MONGODB_DB"))
 	}
 
 	return Config{
