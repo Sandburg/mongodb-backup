@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ type Config struct {
 	MaxBackupItems int
 }
 
-func initConfig() Config {
+func NewConfig() Config {
 	bucketID := os.Getenv("GCS_BUCKET")
 	if bucketID == "" {
 		log.Panic("bucket id can not be empty, set it as environment variable GCS_BUCKET")

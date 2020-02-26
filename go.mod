@@ -7,6 +7,7 @@ require (
 	cloud.google.com/go/storage v1.5.0
 	firebase.google.com/go v3.12.0+incompatible
 	github.com/joho/godotenv v1.3.0
+	github.com/labstack/gommon v0.3.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.4.2
 	google.golang.org/api v0.15.0
