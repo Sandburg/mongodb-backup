@@ -55,7 +55,8 @@ If you want to restore just a specific database, use the nsInclude argument.
 
 Example for kubernetes Cron to backup the databse every hour and keep backups for one day.
 
-```apiVersion: batch/v1beta1
+```yaml
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: backup-db
